@@ -14,14 +14,14 @@ class DatabaseConnection:
 
     # This method connects to PostgreSQL using the psycopg library. We connect
     # to localhost and select the database name given in argument.
-    def connect(self,db_url :str):
+    def connect(self,db_name :str):
         try:
             self.connection = psycopg.connect(
-                db_url,
+                f"postgresql://postgres:password@booksnfilms_db/{db_name}",
                 row_factory=dict_row)
         except psycopg.OperationalError:
-            raise Exception(f"Couldn't connect to the database {db_url.split('\\')[-1]}! " \
-                    f"Did you create it using `createdb {db_url.split('\\')[-1]}`?")
+            raise Exception(f"Couldn't connect to the database {db_name}! " \
+                    f"Did you create it using `createdb {db_name}`?")
 
     # This method seeds the database with the given SQL file.
     # We use it to set up our database ready for our tests or application.
