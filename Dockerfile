@@ -1,6 +1,10 @@
 # start with a base python image
 FROM python:3.13 
 
+# database env variables
+ENV DATABASE_NAME="book_store"
+ENV DATABASE_HOST="postgres:password@book_store_db"
+
 # copies the files in the current dir to a file called /app on the container 
 COPY . /app
 
