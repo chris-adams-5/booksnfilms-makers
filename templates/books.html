@@ -25,6 +25,16 @@
             </li>
             {% endfor %}
         </ul>
+        
+        <h2>Add a Book</h2>
+        <form method="POST" action="/books">
+          <input type="text" name="title" placeholder="Book title">
+          <input type="text" name="author_name" placeholder="Author">
+          <input type="text" name="blurb" placeholder="Book Summary">
+          <input type="text" name="url" placeholder="Image url">
+          <input id = "submit-button" type="submit" value="Submit">
+        </form>
+
     </main>
   </body>
 </html>
