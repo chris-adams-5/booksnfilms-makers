@@ -5,4 +5,4 @@ def test_landing_has_title(page: Page):
 
     h1 = page.locator("h1")
 
-    expect(h1).to_have_text("Books and Authors")
+    expect(h1).to_have_text("Books and Films")
