@@ -68,3 +68,24 @@ li {
   width: 45%;
   text-align: left;
 }
+
+form {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+input {
+  margin-top: 10px;
+  width: 50%;
+}
+
+#submit-button {
+  border-radius: 10px;
+  width: 20%;
+  background-color: blue;
+  color: white;
+  font-size: xx-large;
+}
