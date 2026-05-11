@@ -8,20 +8,22 @@ import os
 # If the below seems too complex right now, that's OK.
 # That's why we have provided it!
 class DatabaseConnection:
+    
+    DATABASE_NAME = os.getenv("DATABASENAME", "booksnfilms_test")
 
     def __init__(self):
         self.connection = None
 
     # This method connects to PostgreSQL using the psycopg library. We connect
     # to localhost and select the database name given in argument.
-    def connect(self,db_name :str):
+    def connect(self):
         try:
             self.connection = psycopg.connect(
-                f"postgresql://postgres:password@booksnfilms_db/{db_name}",
+                f"postgresql://localhost/{self.DATABASE_NAME}",
                 row_factory=dict_row)
         except psycopg.OperationalError:
-            raise Exception(f"Couldn't connect to the database {db_name}! " \
-                    f"Did you create it using `createdb {db_name}`?")
+            raise Exception(f"Couldn't connect to the database {self.DATABASE_NAME}! " \
+                    f"Did you create it using `createdb {self.DATABASE_NAME}`?")
 
     # This method seeds the database with the given SQL file.
     # We use it to set up our database ready for our tests or application.

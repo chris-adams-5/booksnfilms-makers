@@ -12,7 +12,7 @@ from lib.database_connection import DatabaseConnection
 @pytest.fixture
 def db_connection():
     conn = DatabaseConnection()
-    conn.connect("store")
+    conn.connect()
     return conn
 
 # Now, when a test includes a parameter named `db_connection`, Pytest automatically
