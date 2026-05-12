@@ -6,7 +6,6 @@ def test_get_books_200():
     response = client.get("/books")
     assert response.status_code == 200
 
-@pytest.mark.skip
 def test_get_books_returns_all_books():
     client = app.test_client()
     response = client.get("/books")
