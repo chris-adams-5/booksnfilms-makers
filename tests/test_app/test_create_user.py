@@ -24,5 +24,3 @@ def test_create_user_is_saved_to_database(db_connection):
     assert result[0]['username'] == 'testuser'
 
     
-
- test_create_user_is_saved_to_databasetes
