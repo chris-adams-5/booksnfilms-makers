@@ -1,8 +1,9 @@
 from playwright.sync_api import Page, expect
 from data.books import books
 
-def test_books_li_has(page: Page):
-    page.goto("http://3.8.19.234:5001/books")
+def test_books_li_has(page: Page, db_connection):
+    db_connection.seed("seeds/booksnfilms.pgsql")
+    page.goto("http://localhost:5001/books")
 
     li_elements = page.locator("li")
 
