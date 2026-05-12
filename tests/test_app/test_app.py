@@ -1,5 +1,4 @@
 from app import app
-import pytest
 
 def test_get_books_200():
     client = app.test_client()
