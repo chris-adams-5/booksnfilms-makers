@@ -21,8 +21,8 @@ CREATE TABLE films (
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username TEXT,
-    password TEXT
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
 );
 
 
