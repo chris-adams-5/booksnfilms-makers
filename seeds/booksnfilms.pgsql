@@ -1,6 +1,7 @@
 
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS films;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE books (
     id SERIAL PRIMARY KEY,
@@ -18,6 +19,11 @@ CREATE TABLE films (
     imdb TEXT
 );
 
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username TEXT,
+    password TEXT
+);
 
 
 -- Books
@@ -37,3 +43,8 @@ VALUES
 ('Jurassic Park', 122, 'Steven Spielberg', 'https://www.imdb.com/title/tt0107290/'),
 ('Snakes on a Plane', 105, 'David R Ellis', 'https://www.imdb.com/title/tt0417148/'),
 ('Snakes on a Train', 91, 'Peter Mervis', 'https://www.imdb.com/title/tt0843873/');
+
+INSERT INTO users (username, password)
+VALUES
+('user', 'password'),
+('speckled_jim','meeeh');
