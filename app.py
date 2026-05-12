@@ -4,6 +4,8 @@ from lib.database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.book import Book
 from lib.film_repository import FilmRepository
+from lib.user_repository import UserRepository
+from lib.user import User
 from data.authors import authors
 from data.quotes import quotes
 
@@ -49,6 +51,21 @@ def get_authors():
 def get_quotes():
     return quotes
 
+@app.route('/signup_page', methods=['GET'])
+def get_signup():
+    return render_template('signup_page.html')
+
+@app.route('/signup_thanks', methods=['GET'])
+def get_signup_thanks():
+    return render_template('signup_thanks.html')
+
+@app.route('/signup', methods=['POST'])
+def post_signup():
+    user_repository = UserRepository(connection)
+    user_details = request.form
+    new_user = User(None, user_details['user_name'], user_details['password'])
+    user_repository.create(new_user)
+    return redirect('/signup_thanks')
 
 # make the server run in response to `python app.py`
 # on port 5001 (you'll learn more about what this means later)
