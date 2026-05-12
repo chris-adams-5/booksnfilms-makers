@@ -4,7 +4,7 @@ from app import app
 
 def test_create_user_is_saved_to_database(db_connection):
     # create the test client to send requests without using Playwright and a browser
-    db_connection.seed('seedsgit add t/booksnfilms.pgsql')
+    db_connection.seed('seeds/booksnfilms.pgsql')
     client = app.test_client()
 
    # send the request
@@ -25,3 +25,4 @@ def test_create_user_is_saved_to_database(db_connection):
 
     
 
+ test_create_user_is_saved_to_databasetes
