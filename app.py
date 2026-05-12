@@ -4,6 +4,7 @@ from lib.database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
 from lib.book import Book
 from lib.film_repository import FilmRepository
+from lib.film import Film
 from lib.user_repository import UserRepository
 from lib.user import User
 from data.authors import authors
@@ -41,6 +42,22 @@ def get_films():
     film_repository = FilmRepository(connection)
     films = film_repository.all()
     return render_template("films.html", films = films)
+
+@app.route('/films', methods=['POST'])
+def create_film():
+    connection = DatabaseConnection()
+    connection.connect()
+    film_repository = FilmRepository(connection)
+    film_details = request.form
+    film = Film(
+        id=None,
+        title=film_details['title'],
+        director=film_details['director'],
+        run_time_mins=film_details['run_time'],
+        imdb=film_details['imdb'] 
+        )
+    film_repository.create(film)
+    return redirect('/films')
 
 
 @app.route('/authors', methods=['GET'])
