@@ -20,8 +20,8 @@ jobs:
           username: "ec2-user"
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./Dockerfile, ./*.py, ./requirements.txt, ./seeds, ./templates, ./static ./data ./lib"
-          target: ~/book_store
+          source: "./Dockerfile, ./app.py, ./requirements.txt, ./seeds, ./templates, ./static ./data ./lib"
+          target: ~/booksnfilms
 
       - name: Ensure Docker network exists
         uses: appleboy/ssh-action@v1.0.3
@@ -31,8 +31,8 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ ! "$(docker network ls -q -f name=book_store_network)" ]; then
-              docker network create book_store_network
+            if [ ! "$(docker network ls -q -f name=booksnfilms_network)" ]; then
+              docker network create booksnfilms_network
             fi
 
       - name: Ensure database is running
@@ -43,15 +43,15 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ ! "$(docker ps -aq -f name=book_store_db)" ]; then
+            if [ ! "$(docker ps -aq -f name=booksnfilms_db)" ]; then
               docker run \
-                --name book_store_db \
-                --network book_store_network \
+                --name booksnfilms_db \
+                --network booksnfilms_network \
                 -e POSTGRES_USER='${{ secrets.POSTGRES_USER }}' \
                 -e POSTGRES_PASSWORD='${{ secrets.POSTGRES_PASSWORD }}' \
-                -e POSTGRES_DB='book_store' \
+                -e POSTGRES_DB='booksnfilms_db' \
                 -d postgres:17
-              docker exec -i book_store_db psql -U postgres -d book_store < ~/book_store/seeds/books.sql
+              docker exec -i booksnfilms_db psql -U postgres -d booksnfilms < ~/booksnfilms/seeds/booksnfilms.pgsql
             fi
 
       - name: Build Docker image
@@ -62,7 +62,7 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            docker build --pull -t book_store:latest ~/book_store
+            docker build --pull -t booksnfilms:latest ~/booksnfilms
 
       - name: Deploy new container
         uses: appleboy/ssh-action@v1.0.3
@@ -72,14 +72,14 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ "$(docker ps -aq -f name=^book_store$)" ]; then
-              docker stop $(docker ps -q -f name=^book_store$) || true
+            if [ "$(docker ps -aq -f name=^booksnfilms$)" ]; then
+              docker stop $(docker ps -q -f name=^booksnfilms$) || true
             fi
-            docker rm book_store || true
+            docker rm booksnfilms || true
             docker image prune -f || true
             docker run -d \
-              --name book_store \
-              --network book_store_network \
+              --name booksnfilms \
+              --network booksnfilms_network \
               --restart unless-stopped \
               -p 5001:5001 \
-              book_store:latest
+              booksnfilms:latest
