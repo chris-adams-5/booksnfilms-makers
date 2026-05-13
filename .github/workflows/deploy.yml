@@ -43,9 +43,9 @@ jobs:
           port: 22
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ ! "$(docker ps -aq -f name=booksnfilms_db)" ]; then
+            if [ ! "$(docker ps -aq -f name=postgres)" ]; then
               docker run \
-                --name booksnfilms_db \
+                --name postgres \
                 --network booksnfilms_network \
                 -e POSTGRES_USER='${{ secrets.POSTGRES_USER }}' \
                 -e POSTGRES_PASSWORD='${{ secrets.POSTGRES_PASSWORD }}' \
