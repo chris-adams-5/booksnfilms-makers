@@ -44,14 +44,20 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             if [ ! "$(docker ps -q -f name=^postgres$)" ]; then
+              if [ "$(docker ps -aq -f name=^postgres$)" ]; then
+                docker rm -f postgres
+              fi
               docker run \
                 --name postgres \
                 --network booksnfilms_network \
                 -e POSTGRES_USER='${{ secrets.POSTGRES_USER }}' \
                 -e POSTGRES_PASSWORD='${{ secrets.POSTGRES_PASSWORD }}' \
-                -e POSTGRES_DB='booksnfilms_db' \
+                -e POSTGRES_DB='booksnfilms' \
                 -d postgres:17
-              docker exec -i postgres psql -U postgres -d booksnfilms < ~/booksnfilms/seeds/booksnfilms.pgsql
+
+              sleep 2
+
+              docker exec -i postgres psql -U ${{ secrets.POSTGRES_USER }} -d booksnfilms < ~/booksnfilms/seeds/booksnfilms.pgsql
             fi
 
       - name: Build Docker image
