@@ -55,12 +55,9 @@ jobs:
                 -e POSTGRES_DB='booksnfilms' \
                 -d postgres:17
 
-              sleep 2
-
               docker exec -i postgres psql -U ${{ secrets.POSTGRES_USER }} -d booksnfilms < ~/booksnfilms/seeds/booksnfilms.pgsql
 
 
-              sleep 2
             fi
 
       - name: Build Docker image
