@@ -72,7 +72,7 @@ def test_user_repository_delete(db_connection):
 
 
 """
-login
+find user by id
 """
 
 def test_user_login(db_connection):
@@ -80,8 +80,8 @@ def test_user_login(db_connection):
     repository = UserRepository(db_connection)
     new_user = User(None, 'Ford Prefect', 'Mostly_Harml3ss')
     repository.create(new_user)
-    is_logged_in = repository.login(new_user)
-    assert is_logged_in == True
+    user = repository.find_user_by_username(new_user.user_name)
+    assert user == User(3, 'Ford Prefect', 'Mostly_Harml3ss')
 
 
 """
