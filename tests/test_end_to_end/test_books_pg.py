@@ -15,7 +15,8 @@ def test_books_li_has(page: Page, db_connection):
 
         assert li_element.locator("p").all_inner_texts()[0] == f"by {books[i]["author"]}"
 
-def test_books_form(page: Page):
+def test_books_form(page: Page, db_connection):
+    db_connection.seed("seeds/booksnfilms.pgsql")
     page.goto("http://localhost:5001/books")
     page.get_by_placeholder("Title").fill("The Hitchikers Guide to the Galaxy")
     page.get_by_placeholder("Author").fill("Douglas Adams")
