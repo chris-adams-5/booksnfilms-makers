@@ -17,9 +17,18 @@ class UserRepository:
         return User(row["id"],row["username"],row["password"])
     
     def create(self,new_user : User):
+        rows = self._connection.execute("SELECT username FROM users WHERE username=%s", [new_user.user_name])
+        if len(rows) == 1:
+            return False
         self._connection.execute('INSERT INTO users (username, password) VALUES (%s, %s)', [new_user.user_name, new_user.password])
-        return None
+        return True
 
     def delete(self, user_id):
         self._connection.execute('DELETE FROM users WHERE id = %s', [user_id])
         return None
+    
+    def login(self, new_user :User):
+        rows = self._connection.execute('SELECT password FROM users WHERE username = %s', [new_user.user_name])
+        if len(rows) != 1:
+            return False
+        return rows[0]['password'] == new_user.password
