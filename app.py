@@ -9,7 +9,7 @@ from lib.user_repository import UserRepository
 from lib.user import User
 from data.authors import authors
 from data.quotes import quotes
-
+from login_required import login_required
 # instantiate a Flask app object
 app = Flask(__name__)
 
@@ -33,6 +33,7 @@ def get_books():
     return render_template("books.html", books = books)
 
 @app.route('/books', methods=['POST'])
+@login_required
 def create_book():
     book_repository = BookRepository(connection)
     book_details = request.form
@@ -47,6 +48,7 @@ def get_films():
     return render_template("films.html", films = films)
 
 @app.route('/films', methods=['POST'])
+@login_required
 def create_film():
     connection = DatabaseConnection()
     connection.connect()
@@ -107,7 +109,7 @@ def post_login():
 
     if user and user.password == user_details['password']:
         session["user_id"] = user.id
-        session["useername"] = user.user_name
+        session["username"] = user.user_name
         return redirect('/')
     return redirect('/login_failed')
 
