@@ -53,7 +53,7 @@ def test_post_films_302():
     # assert that the redirect happened
     assert response.status_code == 302
 
-def test_post_books_is_saved_to_database(db_connection):
+def test_post_films_is_saved_to_database(db_connection):
     db_connection.seed('seeds/booksnfilms.pgsql')
     client = app.test_client()
 
