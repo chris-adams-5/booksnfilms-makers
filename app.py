@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 
 from lib.database_connection import DatabaseConnection
 from lib.book_repository import BookRepository
@@ -16,6 +16,9 @@ app = Flask(__name__)
 
 connection = DatabaseConnection()
 connection.connect()
+
+app.secret_key = "some_really_secret_key"
+
 
 # Declares a route that listens for a GET request to the path /hello
 # and a method to execute when that request comes in
@@ -100,9 +103,11 @@ def get_login():
 def post_login():
     user_repository = UserRepository(connection)
     user_details = request.form
-    new_user = User(None, user_details['user_name'], user_details['password'])
-    is_successful = user_repository.login(new_user)
-    if is_successful:
+    user = user_repository.find_user_by_username(user_details['user_name'])
+
+    if user and user.password == user_details['password']:
+        session["user_id"] = user.id
+        session["useername"] = user.user_name
         return redirect('/')
     return redirect('/login_failed')
 
