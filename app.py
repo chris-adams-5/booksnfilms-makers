@@ -104,7 +104,7 @@ def post_login():
     is_successful = user_repository.login(new_user)
     if is_successful:
         return redirect('/')
-    return redirect('/login')
+    return redirect('/login_failed')
 
 @app.route('/login_failed', methods = ['GET'])
 def get_login_failed():
