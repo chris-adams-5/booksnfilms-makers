@@ -17,7 +17,17 @@ def test_books_li_has(page: Page, db_connection):
 
 def test_books_form(page: Page, db_connection):
     db_connection.seed("seeds/booksnfilms.pgsql")
+
+    # Login
+    page.goto("http://localhost:5001/login_page")
+    page.get_by_placeholder("User Name / Email").fill("user")
+    page.get_by_placeholder("Password").fill("password")
+    page.get_by_role("button", name="Login").click()
+    
+    ## goto books
     page.goto("http://localhost:5001/books")
+
+    
     page.get_by_placeholder("Title").fill("The Hitchikers Guide to the Galaxy")
     page.get_by_placeholder("Author").fill("Douglas Adams")
     page.get_by_placeholder("Book Summary").fill("A story that begins with a man")
@@ -30,6 +40,8 @@ def test_books_form(page: Page, db_connection):
     "title": "The Hitchikers Guide to the Galaxy",
     "author": "Douglas Adams"
   })
+    
+    assert page.url == "http://localhost:5001/books"
 
     for i, li_element in enumerate(li_elements.all()):
 
@@ -38,3 +50,23 @@ def test_books_form(page: Page, db_connection):
         expect(li_element.locator("h2")).to_have_text(books[i]["title"])
 
         assert li_element.locator("p").all_inner_texts()[0] == f"by {books[i]["author"]}"
+
+"""
+Redirect when page is logged in
+"""
+
+def test_books_form_login_redirect(page: Page, db_connection):
+    db_connection.seed("seeds/booksnfilms.pgsql")
+    
+    ## goto books
+    page.goto("http://localhost:5001/books")
+
+    
+    page.get_by_placeholder("Title").fill("The Hitchikers Guide to the Galaxy")
+    page.get_by_placeholder("Author").fill("Douglas Adams")
+    page.get_by_placeholder("Book Summary").fill("A story that begins with a man")
+    page.get_by_placeholder("Image url").fill("https://m.media-amazon.com/images/S/compressed.photo.goodreads.com/books/1404613595i/13.jpg")
+    page.get_by_role("button", name="Submit").click()
+
+    
+    assert page.url == "http://localhost:5001/login_page"
