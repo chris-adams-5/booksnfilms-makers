@@ -27,8 +27,9 @@ class UserRepository:
         self._connection.execute('DELETE FROM users WHERE id = %s', [user_id])
         return None
     
-    def login(self, new_user :User):
-        rows = self._connection.execute('SELECT password FROM users WHERE username = %s', [new_user.user_name])
+    def find_user_by_username(self, user_name):
+        rows = self._connection.execute('SELECT * FROM users WHERE username = %s', [user_name])
         if len(rows) != 1:
-            return False
-        return rows[0]['password'] == new_user.password
+            return None
+        row = rows[0]
+        return User(row["id"],row["username"],row["password"])
