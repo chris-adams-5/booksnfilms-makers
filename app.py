@@ -72,17 +72,43 @@ def get_quotes():
 def get_signup():
     return render_template('signup_page.html')
 
-@app.route('/signup_thanks', methods=['GET'])
-def get_signup_thanks():
-    return render_template('signup_thanks.html')
-
 @app.route('/signup', methods=['POST'])
 def post_signup():
     user_repository = UserRepository(connection)
     user_details = request.form
     new_user = User(None, user_details['user_name'], user_details['password'])
-    user_repository.create(new_user)
-    return redirect('/signup_thanks')
+    is_succesful = user_repository.create(new_user)
+    if is_succesful:
+        return redirect('/signup_thanks')
+    return redirect('/signup_failed')
+
+@app.route('/signup_thanks', methods=['GET'])
+def get_signup_thanks():
+    return render_template('signup_thanks.html')
+
+@app.route('/signup_failed', methods = ['GET'])
+def get_signup_failed():
+    return render_template('signup_failed.html')
+
+
+@app.route('/login_page', methods=['GET'])
+def get_login():
+    return render_template('login_page.html')
+
+
+@app.route('/login', methods=['POST'])
+def post_login():
+    user_repository = UserRepository(connection)
+    user_details = request.form
+    new_user = User(None, user_details['user_name'], user_details['password'])
+    is_successful = user_repository.login(new_user)
+    if is_successful:
+        return redirect('/')
+    return redirect('/login')
+
+@app.route('/login_failed', methods = ['GET'])
+def get_login_failed():
+    return render_template('login_failed.html')
 
 # make the server run in response to `python app.py`
 # on port 5001 (you'll learn more about what this means later)
