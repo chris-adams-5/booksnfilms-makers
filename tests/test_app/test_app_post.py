@@ -154,3 +154,14 @@ def test_post_films_302():
 
 #     # playwright tests for successful and unsuccesful logins
 
+def test_login(db_connection):
+    client = app.test_client()
+    db_connection.seed('seeds/booksnfilms.pgsql')
+
+    response = client.post('/login', data ={
+        'user_name': 'user',
+        'password' : 'password'
+
+    })
+
+    assert response.status_code == 302
