@@ -2,7 +2,7 @@ from playwright.sync_api import Page, expect
 from data.quotes import quotes
 
 def test_books_li_has(page: Page):
-    page.goto("http://3.8.19.234:5001/quotes")
+    page.goto("http://localhost:5001/quotes")
 
     li_elements = page.locator("li")
 
