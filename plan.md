@@ -23,8 +23,8 @@
     1. sort app tests in to better files ✅
     1. test app routes for login and signup GET ✅
     1. add the app routes for login login GET  ✅
-    1. test app routes for login and signup POST ‼️
-    1. add the app routes for login login POST ‼️
+    1. test app routes for login and signup POST ✅
+    1. add the app routes for login login POST ✅
     1. update signup page so it no longer says login ‼️
     1. create a login page ‼️
     1. seperate the navigation into a sperate html file 🥉 (might do)
@@ -34,6 +34,7 @@
     1. create routes in app for these pages
     1. implement authorisation as per the notes ‼️
     1. implement playwright tests of the login and signup pages ⬇️ (low priority) 
+    1. playwright tests for login failed and succeeded to make sure that the redirect goes to the right place ⬇️
 
 - books page
      1. change runtime input to take only an integer in the ui to prevent the app from crashing 🥉 (might do)
