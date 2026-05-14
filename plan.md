@@ -25,13 +25,13 @@
     1. add the app routes for login login GET  ✅
     1. test app routes for login and signup POST ✅
     1. add the app routes for login login POST ✅
-    1. update signup page so it no longer says login ‼️
-    1. create a login page ‼️
+    1. update signup page so it no longer says login ✅
+    1. create a login page ✅
     1. seperate the navigation into a sperate html file 🥉 (might do)
     1. add this navigation file to all html files 🥉 
     1. update the navigation so login points to login and signup points to signup ✅
-    1. create pages for if the login fails or succeeds ‼️
-    1. create routes in app for these pages
+    1. create pages for if the login fails only fails required succeeds redirects to home ✅
+    1. create routes in app for these pages ✅
     1. implement authorisation as per the notes ‼️
     1. implement playwright tests of the login and signup pages ⬇️ (low priority) 
     1. playwright tests for login failed and succeeded to make sure that the redirect goes to the right place ⬇️
